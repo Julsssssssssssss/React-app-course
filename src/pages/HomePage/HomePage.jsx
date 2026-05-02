@@ -1,10 +1,8 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import cls from "./HomePage.module.css";
-// import { QuestionCard } from "../../components/QuestionCard";
 import { API_URL } from "../../constants";
 import { QuestionCardList } from "../../components/QuestionCardList";
 import { Loader } from "../../components/Loader";
-// import { delayFn } from "../../helpers/delayFn";
 import { useFetch } from "../../hooks/useFetch";
 import { SearchInput } from "../../components/SearchInput";
 import { Button } from "../../components/Button";
@@ -16,6 +14,7 @@ export const HomePage = () => {
   const [questions, setQuestions] = useState({});
   const [searchValue, setSearchValue] = useState("");
   const [sortSelectValue, setSortSelectValue] = useState("");
+  const [countSelectValue, setCountSelectValue] = useState("");
 
   const controlsContainerRef = useRef();
 
@@ -58,14 +57,19 @@ export const HomePage = () => {
   const onSortSelectChangeHandler = (e) => {
     setSortSelectValue(e.target.value);
 
-    setSearchParams(`?_page=1&_per_page=${DEFAULT_PER_PAGE}&${e.target.value}`);
+    setSearchParams(`?_page=1&_per_page=${countSelectValue}&${e.target.value}`);
   };
 
   const paginationHandler = (e) => {
     if (e.target.tagName === "BUTTON") {
-      setSearchParams(`?_page=${e.target.textContent}&_per_page=${DEFAULT_PER_PAGE}&${sortSelectValue}`);
+      setSearchParams(`?_page=${e.target.textContent}&_per_page=${countSelectValue}&${sortSelectValue}`);
       controlsContainerRef.current.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const onCountSelectChangeHandler = (e) => {
+    setCountSelectValue(e.target.value);
+    setSearchParams(`?_page=1&_per_page=${e.target.value}&${sortSelectValue}`);
   };
 
   return (
@@ -80,6 +84,15 @@ export const HomePage = () => {
           <option value="_sort=completed">completed ASC</option>
           <option value="_sort=-completed">completed DESC</option>
         </select>
+        <select value={countSelectValue} onChange={onCountSelectChangeHandler} className={cls.select}>
+          <option disabled>count</option>
+          <hr />
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
       </div>
       {isLoading && <Loader />}
       {error && <p>{error}</p>}
@@ -88,15 +101,17 @@ export const HomePage = () => {
       {cards.length === 0 ? (
         <p className={cls.noCardsInfo}>No cards...</p>
       ) : (
-        <div className={cls.paginationContainer} onClick={paginationHandler}>
-          {pagination.map((value) => {
-            return (
-              <Button key={value} isActive={value === getActivePageNumber()}>
-                {value}
-              </Button>
-            );
-          })}
-        </div>
+        pagination.length > 1 && (
+          <div className={cls.paginationContainer} onClick={paginationHandler}>
+            {pagination.map((value) => {
+              return (
+                <Button key={value} isActive={value === getActivePageNumber()}>
+                  {value}
+                </Button>
+              );
+            })}
+          </div>
+        )
       )}
     </>
   );
