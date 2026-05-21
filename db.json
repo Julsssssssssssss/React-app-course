@@ -564,28 +564,6 @@
       "resources": [],
       "level": 1,
       "completed": false
-    },
-    {
-      "question": "hello",
-      "answer": "short",
-      "description": "desct",
-      "resources": [
-        "https://ya.ru"
-      ],
-      "level": 1,
-      "completed": false,
-      "id": "TEjbm-RBlck"
-    },
-    {
-      "question": "bfgbfb",
-      "answer": "brgbr",
-      "description": "fbb",
-      "resources": [
-        "https://mail.ru"
-      ],
-      "level": 1,
-      "completed": false,
-      "id": "TBl0DOiK9A4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
