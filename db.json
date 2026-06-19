@@ -559,11 +559,12 @@
     {
       "id": "e5c9",
       "question": "Ты крут в React?",
-      "answer": "🍏 канэшна 🍏",
+      "answer": "🍏 канэшна дээ!!!🍏",
       "description": "Потому что React мне очень нравится и я уже много с ним практикуюсь",
       "resources": [],
       "level": 1,
-      "completed": false
+      "completed": false,
+      "editDate": "19.06.2026, 18:57"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
