@@ -27,3 +27,5 @@ export const EditQuestionPage = () => {
     </>
   );
 };
+
+export default EditQuestionPage;
